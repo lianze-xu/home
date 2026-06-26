@@ -3,17 +3,17 @@
     {
       "name": "CyberSecuritySign-Online",
       "description": "Online signing and cybersecurity utility.",
-      "link": ""
+      "link": "https://lianze-xu.github.io/CyberSecuritySign-Online/"
     },
     {
       "name": "BuildLogAnalzer",
       "description": "Build log analysis and diagnostic tool.",
-      "link": ""
+      "link": "https://lianze-xu.github.io/BuildLogAnalzer/"
     },
     {
       "name": "AES-128-Crypto-Lab",
       "description": "AES-128 encryption and cryptography lab.",
-      "link": ""
+      "link": "https://lianze-xu.github.io/AES-128-Crypto-Lab/"
     }
   ]
 }
