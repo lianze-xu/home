@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIANZE HOME</title>
+
+  <style>
+    :root {
+      --bg-main: #f5f5f7;
+      --text-main: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --card-bg: rgba(255, 255, 255, 0.72);
+      --card-border: rgba(0, 0, 0, 0.08);
+      --button-bg: #1d1d1f;
+      --button-text: #ffffff;
+      --button-hover: #000000;
+      --blur: blur(24px);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 28px 90px rgba(0, 0, 0, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.95), transparent 28%),
+        radial-gradient(circle at 80% 10%, rgba(220, 230, 255, 0.75), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg-main) 48%, #ededf0 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0.52),
+          rgba(255, 255, 255, 0.08)
+        );
+      z-index: -1;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .hero {
+      width: min(1120px, 100%);
+      text-align: center;
+      animation: fadeUp 900ms ease both;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      padding: 8px 14px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 999px;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.58);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34c759;
+      box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.16);
+    }
+
+    h1 {
+      font-size: clamp(52px, 9vw, 118px);
+      line-height: 0.95;
+      letter-spacing: -0.075em;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 24px;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--text-secondary);
+      font-size: clamp(18px, 2.2vw, 24px);
+      line-height: 1.45;
+      letter-spacing: -0.02em;
+    }
+
+    .tools {
+      width: min(980px, 100%);
+      margin: 58px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      animation: fadeUp 900ms ease 160ms both;
+    }
+
+    .tool-card {
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 26px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      box-shadow: var(--shadow-soft);
+      text-decoration: none;
+      color: inherit;
+      transition:
+        transform 260ms ease,
+        box-shadow 260ms ease,
+        background 260ms ease,
+        border-color 260ms ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(0, 0, 0, 0.14);
+    }
+
+    .tool-card.disabled {
+      cursor: not-allowed;
+      opacity: 0.56;
+    }
+
+    .tool-card.disabled:hover {
+      transform: none;
+      box-shadow: var(--shadow-soft);
+      background: var(--card-bg);
+      border-color: var(--card-border);
+    }
+
+    .tool-index {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 26px;
+      border-radius: 50%;
+      background: #f2f2f4;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .tool-title {
+      font-size: 24px;
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      font-weight: 650;
+      margin-bottom: 12px;
+    }
+
+    .tool-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    .tool-action {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-start;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--button-bg);
+      color: var(--button-text);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      transition:
+        background 220ms ease,
+        transform 220ms ease;
+    }
+
+    .tool-card:hover .tool-action {
+      background: var(--button-hover);
+      transform: translateX(2px);
+    }
+
+    .tool-card.disabled .tool-action {
+      background: #d2d2d7;
+      color: #6e6e73;
+    }
+
+    .footer {
+      margin-top: 54px;
+      color: #86868b;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      animation: fadeUp 900ms ease 280ms both;
+    }
+
+    .loading,
+    .error {
+      width: min(680px, 100%);
+      margin: 48px auto 0;
+      padding: 22px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .error {
+      color: #b42318;
+      background: rgba(255, 245, 245, 0.78);
+      border-color: rgba(180, 35, 24, 0.16);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .tools {
+        grid-template-columns: 1fr;
+        width: min(560px, 100%);
+      }
+
+      .tool-card {
+        min-height: 190px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding: 38px 16px;
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      h1 {
+        font-size: clamp(48px, 17vw, 76px);
+      }
+
+      .subtitle {
+        font-size: 18px;
+      }
+
+      .tools {
+        margin-top: 42px;
+        gap: 14px;
+      }
+
+      .tool-card {
+        padding: 22px;
+        border-radius: 24px;
+      }
+
+      .tool-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        <span>LIANZE.XU@OUTLOOK.COM</span>
+      </div>
+
+      <h1 id="page-title">L I A N Z E's Home</h1>
+
+      <p class="subtitle">
+        Focused entry point for your needs.
+      </p>
+
+      <div id="status" class="loading">
+        Loading tools from <code>links.json</code>...
+      </div>
+
+      <div id="tools" class="tools" aria-label="Tool links"></div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> LIANZE. All rights reserved.
+    </footer>
+  </main>
+
+  <script>
+    const toolsContainer = document.getElementById("tools");
+    const statusBox = document.getElementById("status");
+    const yearSpan = document.getElementById("year");
+
+    yearSpan.textContent = new Date().getFullYear();
+
+    function createToolCard(tool, index) {
+      const hasLink = typeof tool.link === "string" && tool.link.trim() !== "";
+
+      const card = document.createElement("a");
+      card.className = `tool-card ${hasLink ? "" : "disabled"}`;
+      card.href = hasLink ? tool.link : "#";
+      card.setAttribute("aria-label", tool.name);
+
+      if (hasLink) {
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+      } else {
+        card.setAttribute("aria-disabled", "true");
+        card.addEventListener("click", function (event) {
+          event.preventDefault();
+        });
+      }
+
+      card.innerHTML = `
+        <div>
+          <div class="tool-index">${String(index + 1).padStart(2, "0")}</div>
+          <h2 class="tool-title">${escapeHTML(tool.name || "Untitled Tool")}</h2>
+          <p class="tool-desc">${escapeHTML(tool.description || "")}</p>
+        </div>
+        <span class="tool-action">
+          ${hasLink ? "Open" : "Link Pending"}
+          <span aria-hidden="true">→</span>
+        </span>
+      `;
+
+      return card;
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    async function loadTools() {
+      try {
+        const response = await fetch("./links.json", {
+          cache: "no-store"
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to load links.json. HTTP Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!data.tools || !Array.isArray(data.tools)) {
+          throw new Error("Invalid links.json format. Expected field: tools[]");
+        }
+
+        toolsContainer.innerHTML = "";
+
+        data.tools.forEach(function (tool, index) {
+          toolsContainer.appendChild(createToolCard(tool, index));
+        });
+
+        statusBox.style.display = "none";
+      } catch (error) {
+        console.error(error);
+
+        statusBox.className = "error";
+        statusBox.innerHTML = `
+          Unable to load <code>links.json</code>.<br />
+          Please make sure <code>links.json</code> is in the same directory as <code>index.html</code>.
+        `;
+      }
+    }
+
+    loadTools();
+  </script>
+</body>
+</html>
